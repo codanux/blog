@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Traits;
+namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+trait TranslationTrait {
 
-trait GlobalTrait {
-
-    public static function bootGlobalTrait()
+    public static function bootTranslationTrait()
     {
         self::created(function ($model) {
             if (is_null($model->translation_of)){
@@ -18,11 +15,24 @@ trait GlobalTrait {
         });
     }
 
+    public function translations()
+    {
+        return $this->hasMany(self::class, 'translation_of', 'translation_of');
+    }
+
     public function scopeLocale($query, $locale = null)
     {
         if(!is_null($locale))
         {
             return $query->where('locale', $locale);
+        }
+    }
+
+    public function scopeNotLocale($query, $locale = null)
+    {
+        if(!is_null($locale))
+        {
+            return $query->where('locale', '!=', $locale);
         }
     }
 }

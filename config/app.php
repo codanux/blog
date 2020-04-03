@@ -84,7 +84,7 @@ return [
 
     'default_locale' => 'tr',
 
-    'locales' => array ('en', 'tr', 'fr'),
+    'locales' => array ('en', 'tr'),
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

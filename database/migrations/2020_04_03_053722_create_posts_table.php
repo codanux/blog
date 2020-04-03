@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('locale');
-            $table->string('translation_of');
+            $table->string('translation_of')->nullable();
             $table->timestamps();
         });
     }

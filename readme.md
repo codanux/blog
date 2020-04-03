@@ -1,5 +1,4 @@
 ## How Multilanguage Router
-
 ## config/app.php (Application Locale Configuration)
 
     'locale' => 'en',

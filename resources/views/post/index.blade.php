@@ -3,15 +3,17 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @foreach($posts as $post)
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Dashboard</div>
+                    <div class="card-header"><a href="{{ routeLocalized('post.show', $post) }}">{{ $post->name }}</a></div>
 
                     <div class="card-body">
-                        <a href="{{ routeLocalized('post.index') }}"> Post Index</a>
+                        {{ $post }}
                     </div>
                 </div>
             </div>
+        @endforeach
     </div>
 </div>
 @endsection

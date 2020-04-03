@@ -14,18 +14,22 @@ if (! function_exists('routeLocalized')) {
 }
 
 if (! function_exists('generateLink')) {
-    function generateLink($lang = null, $translations = null)
+    function generateLink($lang = null, $translations = [])
     {
-        $parameters = Route::current()->parameters();
+        $routeName = Route::currentRouteName();
+        $parameters = [];
 
-        if(! is_null($translations))
+        foreach($translations as $key => $trans)
         {
-            foreach($translations as $key => $trans)
+            if ($item = $trans->where('locale', $lang)->first())
             {
-                $parameters = array_merge($parameters, [$key => $trans->where('locale', $lang)->first()]);
+                $parameters = array_merge($parameters, [$key => $item]);
+            }
+            else {
+                return routeLocalized($trans->first()->redirect, $parameters, true, $lang);
             }
         }
 
-        return app('url')->route($lang . '.' . substr(Route::currentRouteName(), 3), $parameters);
+        return routeLocalized(substr($routeName, strpos($routeName, '.') + 1), $parameters, true, $lang);
     }
 }
