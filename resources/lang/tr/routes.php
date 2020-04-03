@@ -19,6 +19,8 @@ return [
         'show' => 'post/{post}'
     ],
     'category' => [
+        'index' => 'kategoriler',
+        'show' => 'kategori/{category}',
         'post' => [
             'show' => 'kategori/{category}/postlar/{post}'
         ]

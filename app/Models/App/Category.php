@@ -5,7 +5,7 @@ namespace App\Models\App;
 use App\Traits\TranslationTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Category extends Model
 {
     use TranslationTrait;
 
@@ -17,12 +17,18 @@ class Post extends Model
 
     public function getRedirectAttribute()
     {
-        return 'post.index';
+        return 'category.index';
     }
 
-    public function category()
+
+    public function categoryable()
     {
-        return $this->morphToMany(Category::class, 'categoryable')
-            ->withTimestamps();
+        return $this->morphTo();
     }
+
+    public function posts()
+    {
+        return $this->morphedByMany(Post::class, 'categoryable');
+    }
+
 }

@@ -26,6 +26,10 @@ foreach(config('app.locales') as $locale) {
         Route::get(trans('routes.post.show', [], $locale), 'PostController@show')->name('post.show');
 
 
+        Route::get(trans('routes.category.index', [], $locale), 'CategoryController@index')->name('category.index');
+        Route::get(trans('routes.category.show', [], $locale), 'CategoryController@show')->name('category.show');
+
+
         // Authentication Routes...
         Route::get(trans('routes.login', [], $locale), 'Auth\LoginController@showLoginForm')->name('login');
         Route::post(trans('routes.login', [], $locale), 'Auth\LoginController@login');

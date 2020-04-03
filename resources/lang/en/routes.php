@@ -18,6 +18,8 @@ return [
         'show' => 'post/{post}'
     ],
     'category' => [
+        'index' => 'categories',
+        'show' => 'category/{category}',
         'post' => [
             'show' => 'category/{category}/post/{post}'
         ]
