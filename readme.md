@@ -1,12 +1,10 @@
 ## How Multilanguage Router
 ## config/app.php (Application Locale Configuration)
-
     'locale' => 'en',
 
     'default_locale' => 'tr',
 
     'locales' => array ('en', 'tr', 'fr'),
-
 ## web.php
 ```
 foreach(config('app.locales') as $locale) {
@@ -16,7 +14,6 @@ foreach(config('app.locales') as $locale) {
         Route::get(trans('routes.home', [], $locale), 'HomeController@index')->name('home');
     });
 }
-
 ```
 ## helper
 ```
@@ -28,27 +25,29 @@ if (! function_exists('routeLocalized')) {
         if (is_null($locale)){
             $locale = app()->getLocale();
         }
-
         return app('url')->route($locale . '.' . $name, $parameters, $absolute);
     }
 }
 
 if (! function_exists('generateLink')) {
-    function generateLink($lang = null, $translations = null)
+    function generateLink($lang = null, $translations = [])
     {
-        $parameters = Route::current()->parameters();
-
-        if(! is_null($translations))
+        $routeName = Route::currentRouteName();
+        $parameters = [];
+        foreach($translations as $key => $trans)
         {
-            foreach($translations as $key => $trans)
+            if ($item = $trans->where('locale', $lang)->first())
             {
-                $parameters = array_merge($parameters, [$key => $trans->where('locale', $lang)->first()]);
+                $parameters = array_merge($parameters, [$key => $item]);
+            }
+            else {
+                return routeLocalized($trans->first()->redirect, $parameters, true, $lang);
             }
         }
-
-        return app('url')->route($lang . '.' . substr(Route::currentRouteName(), 3), $parameters);
+        return routeLocalized(substr($routeName, strpos($routeName, '.') + 1), $parameters, true, $lang);
     }
 }
+
 ```
 ## resources/lang/{language}/routes.php
 ```
