@@ -14,6 +14,17 @@
                 <q-toolbar-title>
                     {{ appName }}
                 </q-toolbar-title>
+
+                <q-space></q-space>
+
+                <q-btn
+                    flat
+                    dense
+                    round
+                    @click="$router.push({ name: 'login' })"
+                    aria-label="Logout"
+                    icon="logout"
+                />
             </q-toolbar>
         </q-header>
 
@@ -25,16 +36,18 @@
         >
             <q-list>
                 <q-item-label header>Router</q-item-label>
-                <router-link v-for="route in routes[0].children" :key="route.path" :to="route.path" v-slot="{ href }">
-                    <q-item clickable rel="noopener" tag="a" :href="href">
-                        <q-item-section avatar>
-                            <q-icon :name="route.icon" />
-                        </q-item-section>
-                        <q-item-section>
-                            <q-item-label>{{ route.name }}</q-item-label>
-                        </q-item-section>
-                    </q-item>
-                </router-link>
+                <template v-for="route in routes">
+                    <router-link v-for="route in route.children" :key="route.path" :to="{ name: route.name }" v-slot="{ href }">
+                        <q-item clickable rel="noopener" tag="a" :href="href">
+                            <q-item-section avatar>
+                                <q-icon :name="route.icon" />
+                            </q-item-section>
+                            <q-item-section>
+                                <q-item-label>{{ route.name }}</q-item-label>
+                            </q-item-section>
+                        </q-item>
+                    </router-link>
+                </template>
             </q-list>
         </q-drawer>
 

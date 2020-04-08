@@ -10,10 +10,17 @@ const router = new VueRouter({
         {
             path: '/',
             component: () => import('@/layouts/MainLayout.vue'),
-            name: 'layout',
             children: [
                 { path: 'dashboard', component: () => import('@/pages/Index.vue'), name: 'index', icon: 'school' },
                 { path: 'post', component: () => import('@/pages/Post.vue'), name: 'post', icon: 'edit' }
+            ]
+        },
+        {
+            path: '/auth',
+            component: () => import('@/layouts/AuthLayout.vue'),
+            children: [
+                { path: 'login', component: () => import('@/pages/auth/Login.vue'), name: 'login', icon: 'school' },
+                { path: 'register', component: () => import('@/pages/Post.vue'), name: 'register', icon: 'edit' }
             ]
         }
     ],
