@@ -37,7 +37,7 @@
             <q-list>
                 <q-item-label header>Router</q-item-label>
                 <template v-for="route in routes">
-                    <router-link v-for="route in route.children" :key="route.path" :to="{ name: route.name }" v-slot="{ href }">
+                    <router-link v-for="route in route.children.filter(a => a.menu !== false)" :key="route.path" :to="{ name: route.name }" v-slot="{ href }">
                         <q-item clickable rel="noopener" tag="a" :href="href">
                             <q-item-section avatar>
                                 <q-icon :name="route.icon" />
@@ -69,11 +69,8 @@
         },
         computed: {
             routes: function() {
-                return this.$router.options.routes;
+                return this.$router.options.routes.filter(a => a.menu !== false);
             }
-        },
-        mounted() {
-            console.log(this.$router.options.routes)
         }
     }
 </script>

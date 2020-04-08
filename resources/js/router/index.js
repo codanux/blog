@@ -12,15 +12,16 @@ const router = new VueRouter({
             component: () => import('@/layouts/MainLayout.vue'),
             children: [
                 { path: 'dashboard', component: () => import('@/pages/Index.vue'), name: 'index', icon: 'school' },
-                { path: 'post', component: () => import('@/pages/Post.vue'), name: 'post', icon: 'edit' }
+                { path: 'post', component: () => import('@/pages/app/post'), name: 'post', icon: 'edit' },
+                { path: 'post/:slug', component: () => import('@/pages/app/post/show'), name: 'post.show', props: true, menu: false }
             ]
         },
         {
-            path: '/auth',
+            path: '/auth', menu: false,
             component: () => import('@/layouts/AuthLayout.vue'),
             children: [
-                { path: 'login', component: () => import('@/pages/auth/Login.vue'), name: 'login', icon: 'school' },
-                { path: 'register', component: () => import('@/pages/Post.vue'), name: 'register', icon: 'edit' }
+                { path: 'login', component: () => import('@/pages/auth/Login'), name: 'login', icon: 'login' },
+                { path: 'register', component: () => import('@/pages/auth/Login'), name: 'register', icon: 'register' }
             ]
         }
     ],
