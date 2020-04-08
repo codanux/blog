@@ -24,61 +24,17 @@
             content-class="bg-grey-2"
         >
             <q-list>
-                <q-item-label header>Essential Links</q-item-label>
-                <q-item clickable tag="a" target="_blank" rel="noopener" href="http://quasar.dev">
-                    <q-item-section avatar>
-                        <q-icon name="school" />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>Docs</q-item-label>
-                        <q-item-label caption>https://quasar.dev</q-item-label>
-                    </q-item-section>
-                </q-item>
-                <q-item clickable tag="a" target="_blank" rel="noopener" href="https://github.quasar.dev">
-                    <q-item-section avatar>
-                        <q-icon name="code" />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>Github</q-item-label>
-                        <q-item-label caption>github.com/quasarframework</q-item-label>
-                    </q-item-section>
-                </q-item>
-                <q-item clickable tag="a" target="_blank" rel="noopener" href="http://chat.quasar.dev">
-                    <q-item-section avatar>
-                        <q-icon name="chat" />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>Discord Chat Channel</q-item-label>
-                        <q-item-label caption>https://chat.quasar.dev</q-item-label>
-                    </q-item-section>
-                </q-item>
-                <q-item clickable tag="a" target="_blank" rel="noopener" href="https://forum.quasar.dev">
-                    <q-item-section avatar>
-                        <q-icon name="record_voice_over" />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>Forum</q-item-label>
-                        <q-item-label caption>https://forum.quasar.dev</q-item-label>
-                    </q-item-section>
-                </q-item>
-                <q-item clickable tag="a" target="_blank" rel="noopener" href="https://twitter.quasar.dev">
-                    <q-item-section avatar>
-                        <q-icon name="rss_feed" />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>Twitter</q-item-label>
-                        <q-item-label caption>@quasarframework</q-item-label>
-                    </q-item-section>
-                </q-item>
-                <q-item clickable tag="a" target="_blank" rel="noopener" href="https://facebook.quasar.dev">
-                    <q-item-section avatar>
-                        <q-icon name="public" />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>Facebook</q-item-label>
-                        <q-item-label caption>@QuasarFramework</q-item-label>
-                    </q-item-section>
-                </q-item>
+                <q-item-label header>Router</q-item-label>
+                <router-link v-for="route in routes[0].children" :key="route.path" :to="route.path" v-slot="{ href }">
+                    <q-item clickable rel="noopener" tag="a" :href="href">
+                        <q-item-section avatar>
+                            <q-icon :name="route.icon" />
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>{{ route.name }}</q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </router-link>
             </q-list>
         </q-drawer>
 
@@ -97,6 +53,14 @@
                 leftDrawerOpen: false,
                 appName: process.env.MIX_APP_NAME
             }
+        },
+        computed: {
+            routes: function() {
+                return this.$router.options.routes;
+            }
+        },
+        mounted() {
+            console.log(this.$router.options.routes)
         }
     }
 </script>

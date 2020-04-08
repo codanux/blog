@@ -19,7 +19,6 @@ foreach(config('app.locales') as $locale) {
     Route::prefix($locale == config('app.default_locale') ? '': $locale)->name($locale.'.')->group(function() use($locale) {
 
         Route::get('/', 'HomeController@welcome')->name('welcome');
-        Route::view('/admin', 'layouts.admin')->name('admin');
 
         Route::get(trans('routes.home', [], $locale), 'HomeController@index')->name('home');
 
@@ -30,6 +29,10 @@ foreach(config('app.locales') as $locale) {
         Route::get(trans('routes.category.index', [], $locale), 'CategoryController@index')->name('category.index');
         Route::get(trans('routes.category.show', [], $locale), 'CategoryController@show')->name('category.show');
 
+
+        // Admin SPA
+        Route::view('/admin', 'layouts.admin')->name('admin');
+        Route::view('/admin/{any}', 'layouts.admin')->where('any', '.*')->name('admin');
 
         // Authentication Routes...
         Route::get(trans('routes.login', [], $locale), 'Auth\LoginController@showLoginForm')->name('login');
