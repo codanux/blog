@@ -19,6 +19,7 @@ foreach(config('app.locales') as $locale) {
     Route::prefix($locale == config('app.default_locale') ? '': $locale)->name($locale.'.')->group(function() use($locale) {
 
         Route::get('/', 'HomeController@welcome')->name('welcome');
+        Route::view('/admin', 'layouts.admin')->name('admin');
 
         Route::get(trans('routes.home', [], $locale), 'HomeController@index')->name('home');
 

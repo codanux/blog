@@ -20,7 +20,7 @@ class Post extends Model
         return 'post.index';
     }
 
-    public function category()
+    public function categories()
     {
         return $this->morphToMany(Category::class, 'categoryable')
             ->withTimestamps();

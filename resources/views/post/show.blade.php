@@ -13,7 +13,12 @@
                 </div>
                 <div class="card-body">
                     <b>Category: </b>
-                    {{ $post->category }}
+                    @foreach($post->categories->groupBy('type.name') as $key => $marka)
+                        {{ $key }}
+                        @foreach($marka as $urun)
+                            {{ $urun }}
+                        @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>
