@@ -59,6 +59,9 @@ service.interceptors.response.use(
 
 
       Notify.create({
+          progress: true,
+          type: 'warning',
+          html: true,
           title: error.response.data.message,
           message,
       });

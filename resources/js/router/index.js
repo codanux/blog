@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { getToken, setToken, removeToken } from '@/utils/auth';
-
 Vue.use(VueRouter)
+
+import { getToken } from '@/utils/auth';
 
 const router = new VueRouter({
     scrollBehavior: () => ({x: 0, y: 0}),
@@ -33,6 +33,7 @@ const router = new VueRouter({
 });
 
 
+
 const whiteList = ['/login', '/register'];
 // auth
 router.beforeEach(async(to, from, next) => {
@@ -54,4 +55,5 @@ router.beforeEach(async(to, from, next) => {
         }
     }
 });
+
 export default router;

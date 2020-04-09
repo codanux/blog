@@ -44,7 +44,6 @@
         >
             <q-scroll-area class="fit">
                 <q-list padding>
-                    <q-item-label header>Router</q-item-label>
                     <template v-for="ly in routes">
                         <router-link v-for="route in ly.children.filter(a => a.meta.hidden !== true)" :key="route.path" :to="{ name: route.name }" v-slot="{ href, isActive }">
                             <q-item :active="isActive" clickable rel="noopener" tag="a" :href="href" v-ripple>

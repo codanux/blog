@@ -11,6 +11,7 @@ $factory->define(Post::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'slug' => Str::slug($faker->name),
+        'body' => $faker->text,
         'locale' => $faker->boolean ? 'tr' : 'en',
     ];
 });

@@ -16,12 +16,14 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = (new Post())->newQuery()->paginate();
-
+        $posts = (new Post())->newQuery()
+            ->where('name', 'like', '%'.$request->get('filter').'%')
+            ->paginate($request->rowsPerPage);
         return JsonResource::collection($posts);
     }
 
@@ -56,9 +58,17 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+            'body' => 'required|min:3',
+            'locale' => 'required'
+        ]);
+
         $post->update([
             'name' => $request->get('name'),
             'slug' => $request->get('slug'),
+            'body' => $request->get('body'),
             'locale' => $request->get('locale'),
         ]);
 
