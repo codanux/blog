@@ -7,7 +7,6 @@ Vue.use(Quasar, {
     lang
 });
 
-
 /*
 LoadingBar.setDefaults({
     color: 'purple',
@@ -15,7 +14,6 @@ LoadingBar.setDefaults({
     position: 'bottom'
 })
 */
-
 
 export default Quasar;
 

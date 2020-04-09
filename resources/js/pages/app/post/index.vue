@@ -5,6 +5,7 @@
             :data="data"
             :columns="columns"
             row-key="name"
+            :visible-columns="visibleColumns"
             :pagination.sync="pagination"
             :loading="loading"
             :filter="filter"
@@ -35,7 +36,7 @@
                     @click="exportTable"
                 />
                 <q-space />
-                <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+                <q-input borderless dense debounce="500" v-model="filter" placeholder="Search">
                     <template v-slot:append>
                         <q-icon name="search" />
                     </template>
@@ -44,6 +45,7 @@
         </q-table>
 
         <div class="row items-start q-gutter-md q-mt-lg">
+
             <div v-for="post in data" :key="post.id">
                 <q-card class="my-card">
                     <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
@@ -120,7 +122,7 @@
             {
 
                 this.loading = true;
-                const { data, meta } = await ApiResource.list({ ...props.pagination });
+                const { data, meta } = await ApiResource.list({ ...props.pagination, 'filter': props.filter });
                 this.data = data ;
 
                 this.$set(this.pagination, 'page', meta.current_page);
