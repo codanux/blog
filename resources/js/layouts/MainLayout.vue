@@ -21,7 +21,7 @@
                     flat
                     dense
                     round
-                    @click="$router.push({ name: 'login' })"
+                    @click="logout"
                     aria-label="Logout"
                     icon="logout"
                 />
@@ -76,6 +76,17 @@
                 drawer: false,
                 miniState: true,
                 appName: process.env.MIX_APP_NAME
+            }
+        },
+        methods: {
+            async logout(){
+                this.$store.dispatch('user/logout')
+                    .then((res) => {
+                        this.$router.push({ name: 'login' });
+                    })
+                    .catch(() => {
+
+                    });
             }
         },
         computed: {

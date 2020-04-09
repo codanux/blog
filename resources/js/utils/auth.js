@@ -1,4 +1,4 @@
-import { Cookies } from 'quasar'
+import { Cookies } from 'quasar';
 
 const TokenKey = 'Admin-Token';
 

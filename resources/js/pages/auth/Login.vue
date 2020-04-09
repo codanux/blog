@@ -11,17 +11,32 @@
 
 <script>
 export default {
-    name: 'PageIndex',
     data(){
         return {
-            email: '',
-            password: ''
+            email: 'codanux@hotmail.com',
+            password: 'secret112233',
+            redirect: undefined,
         }
+    },
+    watch: {
+        $route: {
+            handler: function(route) {
+                this.redirect = route.query && route.query.redirect;
+            },
+            immediate: true,
+        },
     },
     methods: {
         submit()
         {
-            this.$router.push({ name: 'index' });
+            this.$store.dispatch('user/login', { 'email': this.email, 'password': this.password})
+                .then((res) => {
+                    this.$router.push({ path: this.redirect || '/' });
+                })
+                .catch(() => {
+
+                });
+
         }
     }
 }

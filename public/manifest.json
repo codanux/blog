@@ -9,7 +9,7 @@
         }
     ],
 
-    "start_url": "/admin",
+    "start_url": "pwa.html",
     "display": "standalone",
     "background_color": "#1976d2",
     "theme_color": "#1976d2"

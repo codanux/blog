@@ -16,16 +16,11 @@
 
 <script>
     export default {
-        name: 'MyLayout',
-
         data () {
             return {
                 leftDrawerOpen: false,
                 appName: process.env.MIX_APP_NAME
             }
-        },
-        mounted() {
-            console.log(this.$router.options.routes)
         }
     }
 </script>

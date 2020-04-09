@@ -1,5 +1,6 @@
-var staticCacheName = "pwa-v" + new Date().getTime();
+var CACHE_NAME = "pwa-v" + new Date().getTime();
 var filesToCache = [
+    '/pwa.html',
     '/css/admin.css',
     '/js/admin.js',
     '/images/icons/icon-72x72.png',
@@ -14,9 +15,9 @@ var filesToCache = [
 
 // Cache on install
 self.addEventListener("install", event => {
-    this.skipWaiting();
+
     event.waitUntil(
-        caches.open(staticCacheName)
+        caches.open(CACHE_NAME)
             .then(cache => {
                 return cache.addAll(filesToCache);
             })
@@ -30,7 +31,7 @@ self.addEventListener('activate', event => {
             return Promise.all(
                 cacheNames
                     .filter(cacheName => (cacheName.startsWith("pwa-")))
-                    .filter(cacheName => (cacheName !== staticCacheName))
+                    .filter(cacheName => (cacheName !== CACHE_NAME))
                     .map(cacheName => caches.delete(cacheName))
             );
         })
@@ -41,13 +42,35 @@ self.addEventListener('activate', event => {
 self.addEventListener("fetch", event => {
     event.respondWith(
         caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
+            .then(function(response) {
+                // Cache hit - return response
+                if (response) {
+                    return response;
+                }
+
+                return fetch(event.request).then(
+                    function(response) {
+                        // Check if we received a valid response
+                        if(!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+
+                        // IMPORTANT: Clone the response. A response is a stream
+                        // and because we want the browser to consume the response
+                        // as well as the cache consuming the response, we need
+                        // to clone it so we have two streams.
+                        var responseToCache = response.clone();
+
+                        caches.open(CACHE_NAME)
+                            .then(function(cache) {
+                                cache.put(event.request, responseToCache);
+                            });
+
+                        return response;
+                    }
+                );
             })
-            .catch(() => {
-                return caches.match('offline');
-            })
-    )
+    );
 });
 
 /*
