@@ -11,7 +11,7 @@
               </q-img>
 
               <q-card-actions>
-                  <q-btn :to="{ name: 'post.show', params: {'slug': post.id }}" flat>{{ post.name }}</q-btn>
+                  <q-btn :to="{ name: 'post.show', params: {'slug': post.slug }}" flat>{{ post.name }}</q-btn>
               </q-card-actions>
           </q-card>
       </div>
@@ -34,7 +34,7 @@ export default {
         async updateGroups()
         {
             var _self = this;
-            await new axios.get('http://gyiad-biz.test/api/group')
+            await new axios.get('/api/post')
                 .then((response) => {
                     const { data } = response.data;
                     _self.posts = data;

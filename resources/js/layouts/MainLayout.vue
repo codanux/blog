@@ -1,12 +1,12 @@
 <template>
-    <q-layout view="lHh Lpr lFf" class="bg-white">
+    <q-layout view="hHh Lpr lff"class="bg-white">
         <q-header elevated>
             <q-toolbar>
                 <q-btn
                     flat
                     dense
                     round
-                    @click="leftDrawerOpen = !leftDrawerOpen"
+                    @click="drawer = !drawer"
                     aria-label="Menu"
                     icon="menu"
                 />
@@ -29,26 +29,36 @@
         </q-header>
 
         <q-drawer
-            v-model="leftDrawerOpen"
+            v-model="drawer"
             show-if-above
+
+            :mini="miniState"
+            @mouseover="miniState = false"
+            @mouseout="miniState = true"
+            mini-to-overlay
+
+            :width="200"
+            :breakpoint="500"
             bordered
-            content-class="bg-grey-2"
+            content-class="bg-grey-3"
         >
-            <q-list>
-                <q-item-label header>Router</q-item-label>
-                <template v-for="route in routes">
-                    <router-link v-for="route in route.children.filter(a => a.menu !== false)" :key="route.path" :to="{ name: route.name }" v-slot="{ href }">
-                        <q-item clickable rel="noopener" tag="a" :href="href">
-                            <q-item-section avatar>
-                                <q-icon :name="route.icon" />
-                            </q-item-section>
-                            <q-item-section>
-                                <q-item-label>{{ route.name }}</q-item-label>
-                            </q-item-section>
-                        </q-item>
-                    </router-link>
-                </template>
-            </q-list>
+            <q-scroll-area class="fit">
+                <q-list padding>
+                    <q-item-label header>Router</q-item-label>
+                    <template v-for="ly in routes">
+                        <router-link v-for="route in ly.children.filter(a => a.meta.hidden !== true)" :key="route.path" :to="{ name: route.name }" v-slot="{ href, isActive }">
+                            <q-item :active="isActive" clickable rel="noopener" tag="a" :href="href" v-ripple>
+                                <q-item-section avatar>
+                                    <q-icon :name="route.meta.icon" />
+                                </q-item-section>
+                                <q-item-section>
+                                    <q-item-label>{{ route.name }}</q-item-label>
+                                </q-item-section>
+                            </q-item>
+                        </router-link>
+                    </template>
+                </q-list>
+            </q-scroll-area>
         </q-drawer>
 
         <q-page-container>
@@ -63,13 +73,14 @@
 
         data () {
             return {
-                leftDrawerOpen: false,
+                drawer: false,
+                miniState: true,
                 appName: process.env.MIX_APP_NAME
             }
         },
         computed: {
             routes: function() {
-                return this.$router.options.routes.filter(a => a.menu !== false);
+                return this.$router.options.routes.filter(a => a.meta.hidden !== true);
             }
         }
     }

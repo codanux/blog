@@ -25,4 +25,9 @@ class Post extends Model
         return $this->morphToMany(Category::class, 'categoryable')
             ->withTimestamps();
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

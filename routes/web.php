@@ -32,7 +32,7 @@ foreach(config('app.locales') as $locale) {
 
         // Admin SPA
         Route::view('/admin', 'layouts.admin')->name('admin');
-        Route::view('/admin/{any}', 'layouts.admin')->where('any', '.*')->name('admin');
+        Route::view('/admin/{any}', 'layouts.admin')->where('any', '.*');
 
         // Authentication Routes...
         Route::get(trans('routes.login', [], $locale), 'Auth\LoginController@showLoginForm')->name('login');
