@@ -161,7 +161,18 @@
             this.onRequest({
                 'pagination': this.pagination
             });
-        }
+        },
+        meta () {
+            return {
+                title: 'Post Page',
+                titleTemplate: title => `${title} - ${process.env.MIX_APP_NAME}`,
+                meta: {
+                    description: { name: 'description', content: 'Posts,Post,Postlar'},
+                    keywords: { name: 'keywords', content: 'Post website' },
+                    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' }
+                },
+            }
+        },
     }
 </script>
 <style lang="sass" scoped>

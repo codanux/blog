@@ -2083,11 +2083,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.$store.dispatch('user/logout').then(function (res) {
+                _this.$store.dispatch('user/logout').then(function () {
                   _this.$router.push({
                     name: 'login'
                   });
-                })["catch"](function () {});
+                })["catch"](function (err) {
+                  _this.$router.push({
+                    name: 'login'
+                  });
+                });
 
               case 1:
               case "end":
@@ -2159,7 +2163,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  meta: function meta() {
+    return {
+      title: 'Dashboard',
+      titleTemplate: function titleTemplate(title) {
+        return "".concat(title, " - ").concat("Laravel");
+      },
+      meta: {
+        description: {
+          name: 'description',
+          content: 'dashboard'
+        },
+        keywords: {
+          name: 'keywords',
+          content: 'Post website'
+        },
+        equiv: {
+          'http-equiv': 'Content-Type',
+          content: 'text/html; charset=UTF-8'
+        }
+      }
+    };
+  }
+});
 
 /***/ }),
 
@@ -2385,6 +2412,28 @@ var ApiResource = new _api_resource__WEBPACK_IMPORTED_MODULE_2__["default"]('pos
     this.onRequest({
       'pagination': this.pagination
     });
+  },
+  meta: function meta() {
+    return {
+      title: 'Post Page',
+      titleTemplate: function titleTemplate(title) {
+        return "".concat(title, " - ").concat("Laravel");
+      },
+      meta: {
+        description: {
+          name: 'description',
+          content: 'Posts,Post,Postlar'
+        },
+        keywords: {
+          name: 'keywords',
+          content: 'Post website'
+        },
+        equiv: {
+          'http-equiv': 'Content-Type',
+          content: 'text/html; charset=UTF-8'
+        }
+      }
+    };
   }
 });
 
@@ -2551,6 +2600,28 @@ var ApiResource = new _api_resource__WEBPACK_IMPORTED_MODULE_1__["default"]('pos
   },
   mounted: function mounted() {
     this.getPost();
+  },
+  meta: function meta() {
+    return {
+      title: this.post.name,
+      titleTemplate: function titleTemplate(title) {
+        return "".concat(title, " - ").concat("Laravel");
+      },
+      meta: {
+        description: {
+          name: 'description',
+          content: 'post,' + this.post.name
+        },
+        keywords: {
+          name: 'keywords',
+          content: 'Post website'
+        },
+        equiv: {
+          'http-equiv': 'Content-Type',
+          content: 'text/html; charset=UTF-8'
+        }
+      }
+    };
   }
 });
 
@@ -99117,13 +99188,11 @@ var actions = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/api/auth */ "./resources/js/api/auth.js");
 /* harmony import */ var _utils_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/utils/auth */ "./resources/js/utils/auth.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/store */ "./resources/js/store/index.js");
-
 
 
 var state = {
   token: Object(_utils_auth__WEBPACK_IMPORTED_MODULE_1__["getToken"])(),
-  user: window.user
+  user: {}
 };
 var mutations = {
   SET_USER: function SET_USER(state, user) {

@@ -80,11 +80,10 @@
         methods: {
             async logout(){
                 this.$store.dispatch('user/logout')
-                    .then((res) => {
+                    .then(() => {
                         this.$router.push({ name: 'login' });
-                    })
-                    .catch(() => {
-
+                    }).catch((err) => {
+                        this.$router.push({ name: 'login' });
                     });
             }
         },

@@ -138,6 +138,17 @@
         },
         mounted() {
             this.getPost()
-        }
+        },
+        meta () {
+            return {
+                title: this.post.name,
+                titleTemplate: title => `${title} - ${process.env.MIX_APP_NAME}`,
+                meta: {
+                    description: { name: 'description', content: 'post,' + this.post.name },
+                    keywords: { name: 'keywords', content: 'Post website' },
+                    equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' }
+                },
+            }
+        },
     }
 </script>

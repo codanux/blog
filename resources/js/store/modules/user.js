@@ -1,11 +1,9 @@
 import { login, register, logout, getInfo } from '@/api/auth';
 import { getToken, setToken, removeToken } from '@/utils/auth';
-import store from '@/store';
-
 
 const state = {
     token: getToken(),
-    user: window.user
+    user: {}
 };
 
 const mutations = {
