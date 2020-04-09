@@ -39,7 +39,7 @@
             async submit()
             {
                 if (this.post.hasOwnProperty('id')) {
-                    const { data } = await ApiResource.update(this.post.slug, this.post);
+                    const { data } = await ApiResource.update(this.post.id, this.post);
                     this.post = data;
                 } else {
                     const { data } = await ApiResource.store(this.post);

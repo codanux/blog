@@ -15,7 +15,7 @@ const router = new VueRouter({
             meta: { hidden: false },
             redirect: '/dashboard',
             children: [
-                { path: 'dashboard', component: () => import('@/pages/Index.vue'), name: 'index', meta: { icon: 'school' } },
+                { path: 'dashboard', component: () => import('@/pages/Index.vue'), name: 'dashboard', meta: { icon: 'school' } },
                 { path: 'post', component: () => import('@/pages/app/post'), name: 'post', meta: { icon: 'edit' } },
                 { path: 'post/:slug', component: () => import('@/pages/app/post/show'), name: 'post.show', props: true, meta: { hidden: true } }
             ]
@@ -38,10 +38,9 @@ const whiteList = ['/login', '/register'];
 router.beforeEach(async(to, from, next) => {
     const hasToken = getToken();
     if (hasToken) {
-        console.log(to);
-        if (to.path === '/login') {
+        if (to.name === 'login') {
             // if is logged in, redirect to the home page
-            next({ path: '/' });
+            next({ name: 'dashboard' });
         } else {
             next();
         }

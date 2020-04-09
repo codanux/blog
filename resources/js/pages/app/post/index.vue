@@ -11,7 +11,7 @@
               </q-img>
 
               <q-card-actions>
-                  <q-btn :to="{ name: 'post.show', params: {'slug': post.slug }}" flat>{{ post.name }}</q-btn>
+                  <q-btn :to="{ name: 'post.show', params: {'slug': post.id }}" flat>{{ post.name }}</q-btn>
               </q-card-actions>
           </q-card>
       </div>

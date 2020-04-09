@@ -24,4 +24,6 @@ Route::middleware('auth:api')->group(function (){
     });
 });
 
-Route::apiResource('post', 'Admin\App\Post\PostController');
+Route::apiResource('post', 'Admin\App\Post\PostController')->parameters([
+    'post' => 'post:id'
+]);;
