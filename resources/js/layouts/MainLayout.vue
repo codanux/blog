@@ -44,7 +44,7 @@
         >
             <q-scroll-area  class="fit">
                 <q-list separator padding>
-                    <q-item v-for="home in $router.options.routes.find(a => a.meta.home === true).children" :key="home.path" :to="{ name: home.name }" exact>
+                    <q-item v-for="home in $router.options.routes.find(a => a.meta.home === true).children.filter(child => child.meta.position === 'top')" :key="home.path" :to="{ name: home.name }" exact>
                         <q-item-section avatar>
                             <q-icon :name="home.meta.icon"> </q-icon>
                         </q-item-section>
@@ -53,6 +53,14 @@
                         </q-item-section>
                     </q-item>
                     <menu-item v-for="(r,i) in routes" :key="i" :route="r"></menu-item>
+                    <q-item v-for="home in $router.options.routes.find(a => a.meta.home === true).children.filter(child => child.meta.position === 'bottom')" :key="home.path" :to="{ name: home.name }" exact>
+                        <q-item-section avatar>
+                            <q-icon :name="home.meta.icon"> </q-icon>
+                        </q-item-section>
+                        <q-item-section>
+                            <q-item-label>{{ home.meta.title }}</q-item-label>
+                        </q-item-section>
+                    </q-item>
                 </q-list>
             </q-scroll-area>
         </q-drawer>

@@ -15,8 +15,8 @@ const router = new VueRouter({
             component: () => import('@/layouts/MainLayout.vue'),
             meta: { hidden: true, home: true },
             children: [
-                { path: '/dashboard', component: () => import('@/pages/Index.vue'), name: 'dashboard', meta: { icon: 'home', title: 'Dashboard'} },
-                { path: '/settings', component: () => import('@/pages/Index.vue'), name: 'settings', meta: { icon: 'settings', title: 'Setting'} },
+                { path: '/dashboard', component: () => import('@/pages/Index.vue'), name: 'dashboard', meta: { icon: 'home', title: 'Dashboard', position: 'top'} },
+                { path: '/settings', component: () => import('@/pages/Index.vue'), name: 'settings', meta: { icon: 'settings', title: 'Setting', position: 'bottom'} },
             ]
         },
         {
