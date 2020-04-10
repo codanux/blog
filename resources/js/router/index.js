@@ -13,12 +13,27 @@ const router = new VueRouter({
         {
             path: '/',
             component: () => import('@/layouts/MainLayout.vue'),
-            meta: { hidden: false },
+            meta: { hidden: false, title: 'Home', icon: 'home' },
             redirect: '/dashboard',
             children: [
-                { path: 'dashboard', component: () => import('@/pages/Index.vue'), name: 'dashboard', meta: { icon: 'school' } },
-                { path: 'post', component: () => import('@/pages/app/post'), name: 'post', meta: { icon: 'edit' } },
-                { path: 'post/:slug', component: () => import('@/pages/app/post/show'), name: 'post.show', props: true, meta: { hidden: true } }
+                { path: '/dashboard', component: () => import('@/pages/Index.vue'), name: 'dashboard', meta: { icon: 'edit', title:'asd' } },
+            ]
+        },
+        {
+            path: '/post',
+            component: () => import('@/layouts/MainLayout.vue'),
+            meta: { hidden: false, title: 'Post', icon: 'home' },
+            children: [
+                { path: '/', component: () => import('@/pages/app/post'), name: 'post', meta: { icon: 'edit', title: 'İndex' } },
+                {
+                    path: '/child-1', component: () => import('@/pages/app/post'), meta: { icon: 'edit', title: 'İndex 2' },
+                    children: [
+                        {
+                            path: '/child-2', component: () => import('@/pages/app/post'), name: 'postt', meta: { icon: 'edit', title: 'İndex 3' },
+                        }
+                    ]
+                },
+                { path: ':slug', component: () => import('@/pages/app/post/show'), name: 'post.show', props: true, meta: { hidden: true } }
             ]
         },
         {

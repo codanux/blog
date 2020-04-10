@@ -42,20 +42,9 @@
             bordered
             content-class="bg-grey-3"
         >
-            <q-scroll-area class="fit">
-                <q-list padding>
-                    <template v-for="ly in routes">
-                        <router-link v-for="route in ly.children.filter(a => a.meta.hidden !== true)" :key="route.path" :to="{ name: route.name }" v-slot="{ href, isActive }">
-                            <q-item :active="isActive" clickable rel="noopener" tag="a" :href="href" v-ripple>
-                                <q-item-section avatar>
-                                    <q-icon :name="route.meta.icon" />
-                                </q-item-section>
-                                <q-item-section>
-                                    <q-item-label>{{ route.name }}</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </router-link>
-                    </template>
+            <q-scroll-area  class="fit">
+                <q-list separator padding>
+                    <menu-item v-for="(r,i) in routes" :key="i" :route="r"></menu-item>
                 </q-list>
             </q-scroll-area>
         </q-drawer>
@@ -85,6 +74,10 @@
                     }).catch((err) => {
                         this.$router.push({ name: 'login' });
                     });
+            },
+            getChild(ly)
+            {
+                return ly.children.filter(a => a.meta.hidden !== true)
             }
         },
         computed: {
