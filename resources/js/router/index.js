@@ -7,6 +7,7 @@ import { getToken } from '@/utils/auth';
 const router = new VueRouter({
     scrollBehavior: () => ({x: 0, y: 0}),
     base: 'admin',
+    mode: 'history',
     linkExactActiveClass: 'q-item--active',
     routes: [
         {
