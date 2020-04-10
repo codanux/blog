@@ -13,10 +13,10 @@ const router = new VueRouter({
         {
             path: '/',
             component: () => import('@/layouts/MainLayout.vue'),
-            meta: { hidden: false, title: 'Home', icon: 'home' },
-            redirect: '/dashboard',
+            meta: { hidden: true, home: true },
             children: [
-                { path: '/dashboard', component: () => import('@/pages/Index.vue'), name: 'dashboard', meta: { icon: 'edit', title:'asd' } },
+                { path: '/dashboard', component: () => import('@/pages/Index.vue'), name: 'dashboard', meta: { icon: 'home', title: 'Dashboard'} },
+                { path: '/settings', component: () => import('@/pages/Index.vue'), name: 'settings', meta: { icon: 'settings', title: 'Setting'} },
             ]
         },
         {
