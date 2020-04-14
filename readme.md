@@ -1,3 +1,4 @@
+![Laravel](https://github.com/codanux/blog/workflows/Laravel/badge.svg)
 ## How Multilanguage Router
 ## config/app.php (Application Locale Configuration)
     'locale' => 'en',
