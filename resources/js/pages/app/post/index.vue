@@ -98,12 +98,7 @@
                     { name: 'translation_of', align: 'center', label: 'translation_of', field: 'translation_of' },
                     { name: 'actions', align: 'center', label: 'Actions', field: 'actions' },
                 ],
-                data: [
-                    {
-                        name: 'offline',
-                        slug: 'offline'
-                    }
-                ]
+                data: []
             }
         },
         methods: {
@@ -127,7 +122,7 @@
                     cancel: true
                 }).onOk(async () => {
                     this.loading = true;
-                    await new Resource('field').destroy(row.id);
+                    await new Resource('post').destroy(row.id);
                     let index = this.data.findIndex(a => a.id === row.id);
                     this.data.splice(index, 1);
                     this.pagination.rowsNumber--;
