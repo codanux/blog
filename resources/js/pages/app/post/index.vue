@@ -5,29 +5,18 @@
             :data="data"
             :columns="columns"
             row-key="name"
-            :visible-columns="visibleColumns"
             :pagination.sync="pagination"
             :loading="loading"
             :filter="filter"
             @request="onRequest"
         >
             <template v-slot:top>
-                <q-select
-                    v-model="visibleColumns"
-                    multiple
-                    outlined
-                    dense
-                    options-dense
-                    :display-value="$q.lang.table.columns"
-                    emit-value
-                    map-options
-                    :options="columns"
-                    option-value="name"
-                    options-cover
-                    style="min-width: 150px"
-                />
-
-                <q-space></q-space>
+                <q-input borderless dense debounce="500" v-model="filter" placeholder="Search">
+                    <template v-slot:append>
+                        <q-icon name="search" />
+                    </template>
+                </q-input>
+                <q-space />
                 <q-btn
                     color="primary"
                     icon-right="archive"
@@ -35,12 +24,13 @@
                     no-caps
                     @click="exportTable"
                 />
-                <q-space />
-                <q-input borderless dense debounce="500" v-model="filter" placeholder="Search">
-                    <template v-slot:append>
-                        <q-icon name="search" />
-                    </template>
-                </q-input>
+            </template>
+
+            <template v-slot:body-cell-actions="props">
+                <q-td auto-width>
+                    <q-btn color="blue" label="Update" :to="{ name: 'post.show', params: { 'id': props.row.id }}" size=sm no-caps></q-btn>
+                    <q-btn color="red" label="Delete" @click="onDelete(props.row)" size=sm no-caps></q-btn>
+                </q-td>
             </template>
         </q-table>
 
@@ -99,15 +89,14 @@
                     descending: false,
                     page: 1,
                     rowsPerPage: 10,
-
+                    rowsNumber: 1,
                 },
-                visibleColumns: [ 'name', 'slug', 'locale', 'translation_of' ],
                 columns: [
                     { name: 'name', required: true, label: 'Name', align: 'left', field: 'name', sortable: true },
                     { name: 'slug', align: 'center', label: 'Slug', field: 'slug', sortable: true },
-                    { name: 'body', align: 'center', label: 'Body', field: 'body', sortable: true },
                     { name: 'locale',  align: 'center', label: 'Dil', field: 'locale' },
                     { name: 'translation_of', align: 'center', label: 'translation_of', field: 'translation_of' },
+                    { name: 'actions', align: 'center', label: 'Actions', field: 'actions' },
                 ],
                 data: [
                     {
@@ -125,11 +114,31 @@
                 const { data, meta } = await ApiResource.list({ ...props.pagination, 'filter': props.filter });
                 this.data = data ;
 
-                this.$set(this.pagination, 'page', meta.current_page);
-                this.$set(this.pagination, 'rowsPerPage', meta.per_page);
-                this.$set(this.pagination, 'rowsNumber', meta.total);
+                this.pagination = props.pagination;
+                this.pagination.rowsNumber = meta.total;
 
                 this.loading = false;
+            },
+            async onDelete(row)
+            {
+                await this.$q.dialog({
+                    title: 'Confirm',
+                    message: 'Delete ?',
+                    cancel: true
+                }).onOk(async () => {
+                    this.loading = true;
+                    await new Resource('field').destroy(row.id);
+                    let index = this.data.findIndex(a => a.id === row.id);
+                    this.data.splice(index, 1);
+                    this.pagination.rowsNumber--;
+                    this.loading = false;
+                }).onOk(() => {
+                    // console.log('>>>> second OK catcher')
+                }).onCancel(() => {
+                    // console.log('>>>> Cancel')
+                }).onDismiss(() => {
+                    // console.log('I am triggered on both OK and Cancel')
+                });
             },
             exportTable () {
                 // naive encoding to csv format

@@ -33,7 +33,7 @@ const router = new VueRouter({
                         }
                     ]
                 },
-                { path: ':slug', component: () => import('@/pages/app/post/show'), name: 'post.show', props: true, meta: { hidden: true } }
+                { path: ':id', component: () => import('@/pages/app/post/show'), name: 'post.show', props: true, meta: { hidden: true } }
             ]
         },
         {

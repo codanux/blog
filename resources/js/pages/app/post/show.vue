@@ -26,7 +26,7 @@
     const ApiResource = new Resource('post');
 
     export default {
-        props: ['slug'],
+        props: ['id'],
         data(){
             return {
                 post: {
@@ -122,7 +122,7 @@
         methods: {
             async getPost()
             {
-                const { data } = await ApiResource.get(this.slug);
+                const { data } = await ApiResource.get(this.id);
                 this.post = data;
             },
             async submit()
